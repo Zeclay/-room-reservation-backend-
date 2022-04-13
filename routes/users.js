@@ -36,7 +36,6 @@ const addUsers = async function (req, res, next) {
     name: req.body.name,
     surname: req.body.name,
     position: req.body.position,
-    institution: req.body.institution,
     username: req.body.username,
     password: req.body.password,
     roles: req.body.roles
@@ -58,7 +57,6 @@ const updateUser = async function (req, res, next) {
     user.name = req.body.name
     user.surname = req.body.surname
     user.position = req.body.position
-    user.institution = req.body.institution
     user.username = req.body.username
     user.password = req.body.password
     user.roles = req.body.roles

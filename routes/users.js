@@ -33,6 +33,10 @@ const getUserid = async function (req, res, next) {
 
 const addUsers = async function (req, res, next) {
   const newUser = new User({
+    name: req.body.name,
+    surname: req.body.name,
+    position: req.body.position,
+    institution: req.body.institution,
     username: req.body.username,
     password: req.body.password,
     roles: req.body.roles
@@ -51,6 +55,10 @@ const updateUser = async function (req, res, next) {
   const userId = req.params.id
   try {
     const user = await User.findById(userId)
+    user.name = req.body.name
+    user.surname = req.body.surname
+    user.position = req.body.position
+    user.institution = req.body.institution
     user.username = req.body.username
     user.password = req.body.password
     user.roles = req.body.roles

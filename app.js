@@ -7,8 +7,9 @@ const mongoose = require('mongoose')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
-
 const authRouter = require('./routes/auth')
+const buildingRouter = require('./routes/building')
+
 const dotenv = require('dotenv')
 const { authenMiddleware, authorizeMiddleware } = require('./helpers/auth')
 const { ROLE } = require('./constant')
@@ -25,8 +26,8 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
-app.use('/users', authenMiddleware, authorizeMiddleware([ROLE.ADMIN, ROLE.LOCAL_ADMIN]), usersRouter)
-
+app.use('/users', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), usersRouter)
+app.use('/buildings', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM]), buildingRouter)
 app.use('/auth', authRouter)
 
 module.exports = app

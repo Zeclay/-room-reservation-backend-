@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const { ROLE } = require('../constant.js')
 const { Schema } = mongoose
 const userSchema = Schema({
   name: String,
@@ -8,7 +9,7 @@ const userSchema = Schema({
   institution: String,
   username: String,
   password: String,
-  rank_id: [{ type: Schema.Types.ObjectId, ref: 'Rank' }]
+  roles: { type: [String], default: [ROLE.USER] }
 })
 userSchema.pre('save', function (next) {
   const user = this

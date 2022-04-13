@@ -20,7 +20,7 @@ const getAgencyid = async function (req, res, next) {
     const agency = await Agency.findById(id).exec()
     if (agency === null) {
       return res.status(404).json({
-        message: 'User not found!!'
+        message: 'Agency not found!!'
       })
     }
     res.json(agency)

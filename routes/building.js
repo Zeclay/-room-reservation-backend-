@@ -20,7 +20,7 @@ const getBuildingid = async function (req, res, next) {
     const building = await Building.findById(id).exec()
     if (building === null) {
       return res.status(404).json({
-        message: 'User not found!!'
+        message: 'Building not found!!'
       })
     }
     res.json(building)

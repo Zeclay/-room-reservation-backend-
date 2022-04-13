@@ -19,7 +19,7 @@ const getApproveid = async function (req, res, next) {
     const approve = await Approve.findById(id).exec()
     if (approve === null) {
       return res.status(404).json({
-        message: 'User not found!!'
+        message: 'Approve not found!!'
       })
     }
     res.json(approve)

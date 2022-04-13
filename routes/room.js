@@ -19,7 +19,7 @@ const getRoomid = async function (req, res, next) {
     const room = await Room.findById(id).exec()
     if (room === null) {
       return res.status(404).json({
-        message: 'User not found!!'
+        message: 'Room not found!!'
       })
     }
     res.json(room)

@@ -10,6 +10,7 @@ const authRouter = require('./routes/auth')
 const usersRouter = require('./routes/users')
 const buildingRouter = require('./routes/building')
 const agencyRouter = require('./routes/agency')
+const approveRouter = require('./routes/approve')
 
 const dotenv = require('dotenv')
 const { authenMiddleware, authorizeMiddleware } = require('./helpers/auth')
@@ -30,6 +31,7 @@ app.use('/', indexRouter)
 app.use('/users', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), usersRouter)
 app.use('/buildings', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM]), buildingRouter)
 app.use('/agency', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), agencyRouter)
+app.use('/approve', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), approveRouter)
 app.use('/auth', authRouter)
 
 module.exports = app

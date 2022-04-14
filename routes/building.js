@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const Building = require('../models/building')
-const user = require('../models/User')
 
 const getBuildings = async function (req, res, next) {
   try {
@@ -62,7 +61,7 @@ const updateBuilding = async function (req, res, next) {
 const deleteBuilding = async function (req, res, next) {
   const buildingId = req.params.id
   try {
-    await user.findByIdAndDelete(buildingId)
+    await Building.findByIdAndDelete(buildingId)
     return res.status(200).send()
   } catch (err) {
     return res.status(404).send({ message: err.message })

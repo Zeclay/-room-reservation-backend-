@@ -32,7 +32,7 @@ const getBuildingid = async function (req, res, next) {
 
 const addBuildings = async function (req, res, next) {
   const newBuilding = new Building({
-    name_build: req.body.name,
+    name_build: req.body.name_build,
     code: req.body.code
   })
   try {

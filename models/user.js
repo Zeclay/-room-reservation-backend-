@@ -9,6 +9,7 @@ const userSchema = Schema({
   email: String,
   username: String,
   password: String,
+  agency: { type: Schema.Types.ObjectId, ref: 'Agency' },
   roles: { type: [String], default: [ROLE.USER] }
 })
 userSchema.pre('save', function (next) {

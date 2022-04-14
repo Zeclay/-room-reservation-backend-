@@ -19,12 +19,21 @@ async function clear () {
 
 async function main () {
   await clear()
+  const Agency1 = new Agency({ name: 'Infomatics' })
+  const Agency2 = new Agency({ name: 'Huso' })
+  const Agency3 = new Agency({ name: 'Science' })
+  const Agency4 = new Agency({ name: 'Engineer' })
+  Agency1.save()
+  Agency2.save()
+  Agency3.save()
+  Agency4.save()
 
   const user = new User({
     name: 'Mankhong',
     surname: 'Limprapaipaong',
     username: '62160143',
     password: 'buu0001',
+    agency: Agency1,
     position: 'Student',
     email: '62160143@gmail.com',
     roles: [ROLE.USER]
@@ -35,6 +44,7 @@ async function main () {
     surname: 'Chukesorn',
     username: 'christmas',
     password: 'buu0004',
+    agency: Agency2,
     position: 'Teacher',
     email: 'christmas@gmail.com',
     roles: [ROLE.USER, ROLE.APPROVER]
@@ -45,6 +55,7 @@ async function main () {
     surname: 'Theerawut',
     username: 'Sawaminee',
     password: 'buu0009',
+    agency: Agency2,
     position: 'Teacher',
     email: 'Sawaminee@gmail.com',
     roles: [ROLE.USER, ROLE.APPROVER]
@@ -55,6 +66,7 @@ async function main () {
     surname: 'Kongkam',
     username: 'Supakit',
     password: 'buu0015',
+    agency: Agency1,
     position: 'Teacher',
     email: 'Supakit@gmail.com',
     roles: [ROLE.USER, ROLE.LOCAL_ADMIN]
@@ -65,6 +77,7 @@ async function main () {
     surname: 'Sukjaroen',
     username: 'Pubodin',
     password: 'buu0016',
+    agency: Agency1,
     position: 'Teacher',
     email: 'Pubodin@gmail.com',
     roles: [ROLE.USER, ROLE.SYSTEM]
@@ -90,15 +103,6 @@ async function main () {
   Building4.save()
   Building5.save()
   Building6.save()
-
-  const Agency1 = new Agency({ name: 'Infomatics' })
-  const Agency2 = new Agency({ name: 'Huso' })
-  const Agency3 = new Agency({ name: 'Science' })
-  const Agency4 = new Agency({ name: 'Engineer' })
-  Agency1.save()
-  Agency2.save()
-  Agency3.save()
-  Agency4.save()
 
   const Room1 = new Room({
     code: 'KB-203',

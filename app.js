@@ -31,9 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', indexRouter)
 app.use('/users', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), usersRouter)
 app.use('/buildings', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM]), buildingRouter)
-app.use('/agency', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), agencyRouter)
-app.use('/approve', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), approveRouter)
-app.use('/room', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), roomRouter)
+app.use('/agencys', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), agencyRouter)
+app.use('/approves', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), approveRouter)
+app.use('/rooms', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), roomRouter)
 app.use('/auth', authRouter)
 
 module.exports = app

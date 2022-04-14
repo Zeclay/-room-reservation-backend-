@@ -4,7 +4,9 @@ const Approve = require('../models/approve')
 
 const getApprove = async function (req, res, next) {
   try {
-    const approves = await Approve.find({}).exec()
+    const approves = await Approve.find({}).populate({
+      path: 'order_Approve'
+    }).exec()
     res.status(200).json(approves)
   } catch (err) {
     return res.status(500).send({
@@ -16,7 +18,9 @@ const getApprove = async function (req, res, next) {
 const getApproveid = async function (req, res, next) {
   const id = req.params.id
   try {
-    const approve = await Approve.findById(id).exec()
+    const approve = await Approve.findById(id).populate({
+      path: 'order_Approve'
+    }).exec()
     if (approve === null) {
       return res.status(404).json({
         message: 'Approve not found!!'

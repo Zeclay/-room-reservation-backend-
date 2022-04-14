@@ -4,7 +4,13 @@ const Room = require('../models/room')
 
 const getRooms = async function (req, res, next) {
   try {
-    const rooms = await Room.find({}).exec()
+    const rooms = await Room.find({}).populate({
+      path: 'approve_id'
+    }).populate({
+      path: 'building_id'
+    }).populate({
+      path: 'agency_id'
+    }).exec()
     res.status(200).json(rooms)
   } catch (err) {
     return res.status(500).send({
@@ -16,7 +22,13 @@ const getRooms = async function (req, res, next) {
 const getRoomid = async function (req, res, next) {
   const id = req.params.id
   try {
-    const room = await Room.findById(id).exec()
+    const room = await Room.findById(id).populate({
+      path: 'approve_id'
+    }).populate({
+      path: 'building_id'
+    }).populate({
+      path: 'agency_id'
+    }).exec()
     if (room === null) {
       return res.status(404).json({
         message: 'Room not found!!'

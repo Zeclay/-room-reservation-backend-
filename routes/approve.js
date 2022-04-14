@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Approve = require('../models/agency')
+const Approve = require('../models/approve')
 
 const getApprove = async function (req, res, next) {
   try {

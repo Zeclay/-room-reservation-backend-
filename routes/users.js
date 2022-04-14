@@ -4,7 +4,9 @@ const User = require('../models/User')
 
 const getUsers = async function (req, res, next) {
   try {
-    const users = await User.find({}).exec()
+    const users = await User.find({}).populate({
+      path: 'agency'
+    }).exec()
     res.status(200).json(users)
   } catch (err) {
     return res.status(500).send({
@@ -17,7 +19,9 @@ const getUserid = async function (req, res, next) {
   const id = req.params.id
   console.log(id)
   try {
-    const user = await User.findById(id).exec()
+    const user = await User.findById(id).populate({
+      path: 'agency'
+    }).exec()
     if (user === null) {
       return res.status(404).json({
         message: 'User not found!!'

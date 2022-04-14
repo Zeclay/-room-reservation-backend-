@@ -26,6 +26,7 @@ async function main () {
     username: '62160143',
     password: 'buu0001',
     position: 'Student',
+    email: '62160143@gmail.com',
     roles: [ROLE.USER]
   })
 
@@ -35,6 +36,7 @@ async function main () {
     username: 'christmas',
     password: 'buu0004',
     position: 'Teacher',
+    email: 'christmas@gmail.com',
     roles: [ROLE.USER, ROLE.APPROVER]
   })
 
@@ -44,6 +46,7 @@ async function main () {
     username: 'Sawaminee',
     password: 'buu0009',
     position: 'Teacher',
+    email: 'Sawaminee@gmail.com',
     roles: [ROLE.USER, ROLE.APPROVER]
   })
 
@@ -53,6 +56,7 @@ async function main () {
     username: 'Supakit',
     password: 'buu0015',
     position: 'Teacher',
+    email: 'Supakit@gmail.com',
     roles: [ROLE.USER, ROLE.LOCAL_ADMIN]
   })
 
@@ -62,6 +66,7 @@ async function main () {
     username: 'Pubodin',
     password: 'buu0016',
     position: 'Teacher',
+    email: 'Pubodin@gmail.com',
     roles: [ROLE.USER, ROLE.SYSTEM]
   })
   user.save()

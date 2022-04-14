@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const Agency = require('../models/agency')
-const user = require('../models/User')
 
 const getAgencys = async function (req, res, next) {
   try {
@@ -50,7 +49,7 @@ const updateAgency = async function (req, res, next) {
   try {
     const agency = await Agency.findById(agencyId)
     agency.name = req.body.name
-    await user.save()
+    await agency.save()
     return res.status(200).json(agency)
   } catch (err) {
     return res.status(404).send({ message: err.message })

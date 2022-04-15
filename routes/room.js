@@ -19,16 +19,29 @@ const getRooms = async function (req, res, next) {
   }
 }
 
-const getRoomid = async function (req, res, next) {
+const getRoomsIn = async function (req, res, next) {
   const id = req.params.id
+  const ObjectId = require('mongoose').Types.ObjectId
   try {
-    const room = await Room.findById(id).populate({
+    const rooms = await Room.find({ building_id: new ObjectId(id) }).populate({
       path: 'approve_id'
     }).populate({
       path: 'building_id'
     }).populate({
       path: 'agency_id'
     }).exec()
+    res.status(200).json(rooms)
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message
+    })
+  }
+}
+
+const getRoomid = async function (req, res, next) {
+  const id = req.params.id
+  try {
+    const room = await Room.findById(id).exec()
     if (room === null) {
       return res.status(404).json({
         message: 'Room not found!!'
@@ -94,6 +107,7 @@ const deleteRoom = async function (req, res, next) {
 
 router.get('/', getRooms)
 router.get('/:id', getRoomid)
+router.get('/searchByBuilding/:id', getRoomsIn)
 router.post('/', addRooms)
 router.put('/:id', updateRoom)
 router.delete('/:id', deleteRoom)

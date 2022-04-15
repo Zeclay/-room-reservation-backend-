@@ -12,6 +12,7 @@ const buildingRouter = require('./routes/building')
 const agencyRouter = require('./routes/agency')
 const approveRouter = require('./routes/approve')
 const roomRouter = require('./routes/room')
+const bookingRouter = require('./routes/booking')
 
 const dotenv = require('dotenv')
 const { authenMiddleware, authorizeMiddleware } = require('./helpers/auth')
@@ -34,6 +35,7 @@ app.use('/buildings', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYS
 app.use('/agencys', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), agencyRouter)
 app.use('/approves', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), approveRouter)
 app.use('/rooms', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), roomRouter)
+app.use('/booking', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN, ROLE.APPROVER]), bookingRouter)
 app.use('/auth', authRouter)
 
 module.exports = app

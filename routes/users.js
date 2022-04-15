@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
+const { ROLE } = require('../constant.js')
 
 const getUsers = async function (req, res, next) {
   try {
@@ -49,14 +50,30 @@ const getUserid = async function (req, res, next) {
 }
 
 const addUsers = async function (req, res, next) {
-  const newUser = new User({
-    name: req.body.name,
-    surname: req.body.name,
-    position: req.body.position,
-    username: req.body.username,
-    password: req.body.password,
-    roles: req.body.roles
-  })
+  let newUser
+  if (req.body.rank === '') {
+    newUser = new User({
+      name: req.body.name,
+      surname: req.body.surname,
+      position: req.body.position,
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+      agency: req.body.agency,
+      roles: [ROLE.USER]
+    })
+  } else {
+    newUser = new User({
+      name: req.body.name,
+      surname: req.body.surname,
+      position: req.body.position,
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+      agency: req.body.agency,
+      roles: [ROLE.USER, req.body.rank]
+    })
+  }
   try {
     await newUser.save()
     res.status(201).json(newUser)
@@ -74,9 +91,16 @@ const updateUser = async function (req, res, next) {
     user.name = req.body.name
     user.surname = req.body.surname
     user.position = req.body.position
+    user.email = req.body.email
     user.username = req.body.username
     user.password = req.body.password
-    user.roles = req.body.roles
+    user.agency = req.body.agency
+    if (req.body.rank === '') {
+      user.roles = [ROLE.USER]
+    } else {
+      user.roles = [ROLE.USER, req.body.rank]
+    }
+
     await user.save()
     return res.status(200).json(user)
   } catch (err) {

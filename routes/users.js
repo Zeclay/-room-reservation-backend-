@@ -95,8 +95,9 @@ const updateUser = async function (req, res, next) {
     user.username = req.body.username
     user.password = req.body.password
     user.agency = req.body.agency
-    if (req.body.rank === '') {
-      user.roles = [ROLE.USER]
+    if (req.body.rank === '' || req.body.rank === null) {
+      user.roles[0] = ROLE.USER
+      user.roles[1].pop()
     } else {
       user.roles = [ROLE.USER, req.body.rank]
     }

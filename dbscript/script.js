@@ -88,7 +88,7 @@ async function main () {
   user3.save()
   user4.save()
 
-  const Approve1 = new Approve({ description: 'ชุดผู้พิจารณาที่ 2', order_Approve: [user1, user2] })
+  const Approve1 = new Approve({ description: 'ชุดผู้พิจารณาที่ 2', agencys: Agency2, order_Approve: [user1, user2] })
   Approve1.save()
 
   const Building1 = new Building({ name_build: 'อาคารคณะวิทยาการสารสนเทศ', code: 'IF' })

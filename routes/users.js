@@ -15,6 +15,19 @@ const getUsers = async function (req, res, next) {
   }
 }
 
+const getUserApprove = async function (req, res, next) {
+  try {
+    const users = await User.find({ roles: 'APPROVER' }).populate({
+      path: 'agency'
+    }).exec()
+    res.status(200).json(users)
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message
+    })
+  }
+}
+
 const getUserid = async function (req, res, next) {
   const id = req.params.id
   console.log(id)
@@ -82,6 +95,7 @@ const deleteUser = async function (req, res, next) {
 }
 
 router.get('/', getUsers) // get
+router.get('/approvers', getUserApprove)
 router.post('/', addUsers) // add
 router.get('/:id', getUserid) // get id
 router.put('/:id', updateUser) // Add new User

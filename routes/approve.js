@@ -6,6 +6,8 @@ const getApprove = async function (req, res, next) {
   try {
     const approves = await Approve.find({}).populate({
       path: 'order_Approve'
+    }).populate({
+      path: 'agencys'
     }).exec()
     res.status(200).json(approves)
   } catch (err) {
@@ -38,8 +40,10 @@ const addApprove = async function (req, res, next) {
   const description = req.body.description
   const user1 = req.body.user1
   const user2 = req.body.user2
+  const agencys = req.body.agencys
   const newApprove = new Approve({
     description: description,
+    agencys: agencys,
     order_Approve: [user1, user2]
   })
   try {

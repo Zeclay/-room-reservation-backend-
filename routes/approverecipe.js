@@ -53,8 +53,38 @@ const addApproveRecipe = async function (req, res, next) {
   }
 }
 
+const pass = async function (req, res, next) {
+  const id = req.body._id
+  try {
+    const approveRecipe = await ApproveRecipe.findById(id).exec()
+    const approve = await Approve.findById(approveRecipe.approve_id)
+    approveRecipe.current_order++
+    if (approveRecipe.current_order === 2) {
+      approveRecipe.user_id = approve.approver2
+    } else if (approveRecipe.current_order === 3) {
+      approveRecipe.user_id = null
+    }
+    await approveRecipe.save()
+  } catch (err) {
+    return res.status(404).send({ message: err.message })
+  }
+}
+
+const cancel = async function (req, res, next) {
+  const id = req.body._id
+  try {
+    const approveRecipe = await ApproveRecipe.findById(id).exec()
+    approveRecipe.user_id = null
+    await approveRecipe.save()
+  } catch (err) {
+    return res.status(404).send({ message: err.message })
+  }
+}
+
 router.get('/', getApproveRecipe)
 router.get('/:id', getApproveRecipeid)
 router.post('/addApproveRecipe', addApproveRecipe)
+router.post('/pass', pass)
+router.post('/cancel', cancel)
 
 module.exports = router

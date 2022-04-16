@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const Booking = require('../models/booking')
-const Room = require('../models/room')
 
 const getBookings = async function (req, res, next) {
   try {
@@ -32,12 +31,11 @@ const getBookingid = async function (req, res, next) {
 }
 
 const addBooking = async function (req, res, next) {
-  const room = await Room.findById(req.body.room_id).exec()
   const newBooking = new Booking({
-    startTime: req.body.date + req.body.timestart,
-    endTime: req.body.date + req.body.timeStop,
+    startTime: req.body.date + ' ' + req.body.timestart,
+    endTime: req.body.date + ' ' + req.body.timeStop,
     result_status: 0,
-    approve_id: room.approve_id,
+    approve_id: req.body.approve_id,
     user_id: req.body.user_id,
     room_id: req.body.room_id
   })

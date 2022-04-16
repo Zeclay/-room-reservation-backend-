@@ -76,6 +76,7 @@ const pass = async function (req, res, next) {
       const AddTimeTable = new TimeTable({
         checkIn: booking.startTime,
         checkOut: booking.endTime,
+        room_id: booking.room_id,
         booking_id: booking._id
       })
       await AddTimeTable.save()

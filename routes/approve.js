@@ -5,8 +5,8 @@ const Approve = require('../models/approve')
 const getApprove = async function (req, res, next) {
   try {
     const approves = await Approve.find({}).populate({
-      path: 'order_Approve'
-    }).populate({
+      path: 'approver1'
+    }).populate({ path: 'approver2' }).populate({
       path: 'agencys'
     }).exec()
     res.status(200).json(approves)
@@ -18,11 +18,11 @@ const getApprove = async function (req, res, next) {
 }
 
 const getApproveid = async function (req, res, next) {
-  const id = req.params.id
+  const id = req.params.id.populate({
+    path: 'approver1'
+  }).populate({ path: 'approver2' }).exec()
   try {
-    const approve = await Approve.findById(id).populate({
-      path: 'order_Approve'
-    }).exec()
+    const approve = await Approve.findById(id).exec()
     if (approve === null) {
       return res.status(404).json({
         message: 'Approve not found!!'
@@ -44,7 +44,8 @@ const addApprove = async function (req, res, next) {
   const newApprove = new Approve({
     description: description,
     agencys: agencys,
-    order_Approve: [user1, user2]
+    approver1: user1,
+    approver2: user2
   })
   try {
     await newApprove.save()
@@ -64,8 +65,8 @@ const updateApprove = async function (req, res, next) {
   try {
     const approve = await Approve.findById(approveId)
     approve.description = description
-    approve.order_Approve[0] = user1
-    approve.order_Approve[1] = user2
+    approve.approver1 = user1
+    approve.approver2 = user2
     await approve.save()
     return res.status(200).json(approve)
   } catch (err) {

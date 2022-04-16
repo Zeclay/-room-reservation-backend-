@@ -37,7 +37,7 @@ const addBooking = async function (req, res, next) {
     start: req.body.timestart,
     end: req.body.timeStop,
     date: req.body.date,
-    result_status: 0,
+    result_status: 'รอพิจารณา',
     approve_id: req.body.approve_id,
     user_id: req.body.user_id,
     room_id: req.body.room_id
@@ -51,8 +51,24 @@ const addBooking = async function (req, res, next) {
     })
   }
 }
+
+const getBookingByUserId = async function (req, res, next) {
+  const id = req.params.id
+  const ObjectId = require('mongoose').Types.ObjectId
+  try {
+    const booking = await Booking.find({ user_id: new ObjectId(id) }).populate({
+      path: 'user_id'
+    }).populate({ path: 'room_id', populate: { path: 'building_id' } }).exec()
+    res.status(200).json(booking)
+  } catch (err) {
+    return res.status(500).send({
+      message: err.message
+    })
+  }
+}
 router.get('/', getBookings)
 router.get('/:id', getBookingid)
 router.post('/addBooking', addBooking)
+router.get('/getbookbyuser/:id', getBookingByUserId)
 
 module.exports = router

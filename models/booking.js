@@ -6,7 +6,7 @@ const bookingSchema = Schema({
   start: String,
   end: String,
   date: String,
-  result_status: Number,
+  result_status: String,
   approve_id: { type: Schema.Types.ObjectId, ref: 'Approve' },
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },
   room_id: { type: Schema.Types.ObjectId, ref: 'Room' }

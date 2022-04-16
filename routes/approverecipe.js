@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const ApproveRecipe = require('../models/approvesrecipe')
 const Approve = require('../models/approve')
+const Booking = require('../models/booking')
 
 const getApproveRecipe = async function (req, res, next) {
   try {
@@ -58,18 +59,22 @@ const pass = async function (req, res, next) {
   const id = req.body._id
   try {
     const approveRecipe = await ApproveRecipe.findById(id).exec()
+    const booking = await Booking.findById(approveRecipe.booking_id)
     const approve = await Approve.findById(approveRecipe.approve_id)
     approveRecipe.current_order++
     if (approveRecipe.current_order === 2) {
       approveRecipe.user_id = approve.approver2
       approveRecipe.status_approver = 1
       approveRecipe.status_result = 'รอพิจารณา'
+      booking.result_status = 'รอพิจารณา'
     } else if (approveRecipe.current_order === 3) {
       approveRecipe.user_id = null
       approveRecipe.status_approver = 2
       approveRecipe.status_result = 'อนุมัติ'
+      booking.result_status = 'อนุมัติ'
     }
     await approveRecipe.save()
+    await booking.save()
   } catch (err) {
     return res.status(404).send({ message: err.message })
   }
@@ -79,10 +84,13 @@ const cancel = async function (req, res, next) {
   const id = req.body._id
   try {
     const approveRecipe = await ApproveRecipe.findById(id).exec()
+    const booking = await Booking.findById(approveRecipe.booking_id)
     approveRecipe.user_id = null
     approveRecipe.status_approver = -1
     approveRecipe.status_result = 'ไม่อนุมัติ'
+    booking.result_status = 'ไม่อนุมัติ'
     await approveRecipe.save()
+    await booking.save()
   } catch (err) {
     return res.status(404).send({ message: err.message })
   }

@@ -14,6 +14,7 @@ const approveRouter = require('./routes/approve')
 const roomRouter = require('./routes/room')
 const bookingRouter = require('./routes/booking')
 const approveRecipeRouter = require('./routes/approverecipe')
+const timeTable = require('./routes/timetable')
 
 const dotenv = require('dotenv')
 const { authenMiddleware, authorizeMiddleware } = require('./helpers/auth')
@@ -39,5 +40,5 @@ app.use('/rooms', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM,
 app.use('/booking', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN, ROLE.APPROVER]), bookingRouter)
 app.use('/approveRecipe', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN, ROLE.APPROVER]), approveRecipeRouter)
 app.use('/auth', authRouter)
-
+app.use('/timeTable', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN, ROLE.APPROVER]), timeTable)
 module.exports = app

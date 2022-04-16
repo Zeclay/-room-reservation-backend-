@@ -3,6 +3,7 @@ const router = express.Router()
 const ApproveRecipe = require('../models/approvesrecipe')
 const Approve = require('../models/approve')
 const Booking = require('../models/booking')
+const TimeTable = require('../models/timetable')
 
 const getApproveRecipe = async function (req, res, next) {
   try {
@@ -72,7 +73,14 @@ const pass = async function (req, res, next) {
       approveRecipe.status_approver = 2
       approveRecipe.status_result = 'อนุมัติ'
       booking.result_status = 'อนุมัติ'
+      const AddTimeTable = new TimeTable({
+        checkIn: booking.startTime,
+        checkOut: booking.endTime,
+        booking_id: booking._id
+      })
+      await AddTimeTable.save()
     }
+
     await approveRecipe.save()
     await booking.save()
   } catch (err) {

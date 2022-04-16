@@ -3,6 +3,9 @@ const { Schema } = mongoose
 const bookingSchema = Schema({
   startTime: Date,
   endTime: Date,
+  start: String,
+  end: String,
+  date: String,
   result_status: Number,
   approve_id: { type: Schema.Types.ObjectId, ref: 'Approve' },
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },

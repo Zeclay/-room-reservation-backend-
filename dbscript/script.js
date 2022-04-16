@@ -5,6 +5,7 @@ const Room = require('../models/Room')
 const Building = require('../models/Building')
 const Approve = require('../models/Approve')
 const Agency = require('../models/Agency')
+const Booking = require('../models/Booking')
 
 const { ROLE } = require('../constant.js')
 mongoose.connect('mongodb://localhost:27017/project')
@@ -15,6 +16,7 @@ async function clear () {
   await Building.deleteMany({})
   await Approve.deleteMany({})
   await Agency.deleteMany({})
+  await Booking.deleteMany({})
 }
 
 async function main () {

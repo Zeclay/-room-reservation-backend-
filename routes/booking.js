@@ -4,7 +4,7 @@ const Booking = require('../models/booking')
 
 const getBookings = async function (req, res, next) {
   try {
-    const bookings = await Booking.find({}).exec()
+    const bookings = await Booking.find({}).populate({ path: 'approve_id' }).populate({ path: 'user_id' }).populate({ path: 'room_id' }).exec()
     res.status(200).json(bookings)
   } catch (err) {
     return res.status(500).send({
@@ -16,7 +16,7 @@ const getBookings = async function (req, res, next) {
 const getBookingid = async function (req, res, next) {
   const id = req.params.id
   try {
-    const booking = await Booking.findById(id).exec()
+    const booking = await Booking.findById(id).populate({ path: 'approve_id' }).populate({ path: 'room_id' }).exec()
     if (booking === null) {
       return res.status(404).json({
         message: 'Booking not found!!'
@@ -34,6 +34,9 @@ const addBooking = async function (req, res, next) {
   const newBooking = new Booking({
     startTime: req.body.date + ' ' + req.body.timestart,
     endTime: req.body.date + ' ' + req.body.timeStop,
+    start: req.body.timestart,
+    end: req.body.timeStop,
+    date: req.body.date,
     result_status: 0,
     approve_id: req.body.approve_id,
     user_id: req.body.user_id,
@@ -51,4 +54,5 @@ const addBooking = async function (req, res, next) {
 router.get('/', getBookings)
 router.get('/:id', getBookingid)
 router.post('/addBooking', addBooking)
+
 module.exports = router

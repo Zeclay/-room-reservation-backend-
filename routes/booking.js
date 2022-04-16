@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const Booking = require('../models/booking')
 const Room = require('../models/room')
-const Approve = require('../models/approve')
 
 const getBookings = async function (req, res, next) {
   try {
@@ -33,17 +32,12 @@ const getBookingid = async function (req, res, next) {
 }
 
 const addBooking = async function (req, res, next) {
-  const room = Room.findById(req.body.room_id).populate({ path: 'approve_id' }).exec()
-  const approveid = room.approve_id._id
-  const approve = Approve.findById(approveid).populate({ path: 'order_approve' }).exec()
-  const user1 = approve.order_approve[0]._id
-  const user2 = approve.order_approve[1]._id
+  const room = await Room.findById(req.body.room_id).exec()
   const newBooking = new Booking({
     startTime: req.body.date + req.body.timestart,
-    endTime: req.body.date + req.body.timeend,
-    approveres: [{ user1, approveDate: null, status: 0 }, { user2, approveDate: null, status: 0 }],
+    endTime: req.body.date + req.body.timeStop,
     result_status: 0,
-    order: req.body.approve_id,
+    approve_id: room.approve_id,
     user_id: req.body.user_id,
     room_id: req.body.room_id
   })

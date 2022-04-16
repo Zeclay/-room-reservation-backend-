@@ -37,8 +37,9 @@ const addApproveRecipe = async function (req, res, next) {
   const approve = await Approve.findById(req.body.booking.approve_id)
   const newApproveRecipe = new ApproveRecipe({
     booking_id: req.body.bookingid,
-    status_approve: 0,
+    status_approver: 0,
     current_order: 1,
+    status_result: 'รอพิจารณา',
     approve_id: req.body.booking.approve_id,
     timeApprove: null,
     user_id: approve.approver1
@@ -61,8 +62,12 @@ const pass = async function (req, res, next) {
     approveRecipe.current_order++
     if (approveRecipe.current_order === 2) {
       approveRecipe.user_id = approve.approver2
+      approveRecipe.status_approver = 1
+      approveRecipe.status_result = 'รอพิจารณา'
     } else if (approveRecipe.current_order === 3) {
       approveRecipe.user_id = null
+      approveRecipe.status_approver = 2
+      approveRecipe.status_result = 'อนุมัติ'
     }
     await approveRecipe.save()
   } catch (err) {
@@ -75,6 +80,8 @@ const cancel = async function (req, res, next) {
   try {
     const approveRecipe = await ApproveRecipe.findById(id).exec()
     approveRecipe.user_id = null
+    approveRecipe.status_approver = -1
+    approveRecipe.status_result = 'ไม่อนุมัติ'
     await approveRecipe.save()
   } catch (err) {
     return res.status(404).send({ message: err.message })

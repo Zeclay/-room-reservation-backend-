@@ -3,6 +3,7 @@ const { Schema } = mongoose
 const approvesRecipeSchema = Schema({
   status_approver: Number,
   current_order: Number,
+  status_result: String,
   booking_id: { type: Schema.Types.ObjectId, ref: 'Booking' },
   approve_id: { type: Schema.Types.ObjectId, ref: 'Approve' },
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },

@@ -16,7 +16,7 @@ const getBookings = async function (req, res, next) {
 const getBookingid = async function (req, res, next) {
   const id = req.params.id
   try {
-    const booking = await Booking.findById(id).populate({ path: 'approve_id' }).populate({ path: 'room_id' }).exec()
+    const booking = await Booking.find({ user_id: id }).exec()
     if (booking === null) {
       return res.status(404).json({
         message: 'Booking not found!!'

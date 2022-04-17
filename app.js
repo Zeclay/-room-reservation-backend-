@@ -15,6 +15,7 @@ const roomRouter = require('./routes/room')
 const bookingRouter = require('./routes/booking')
 const approveRecipeRouter = require('./routes/approverecipe')
 const timeTable = require('./routes/timetable')
+const seeBuilding = require('./routes/seebuilding')
 
 const dotenv = require('dotenv')
 const { authenMiddleware, authorizeMiddleware } = require('./helpers/auth')
@@ -33,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/users', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), usersRouter)
-app.use('/buildings', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.APPROVER]), buildingRouter)
+app.use('/buildings', authenMiddleware, authorizeMiddleware([ROLE.SYSTEM]), buildingRouter)
 app.use('/agencys', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), agencyRouter)
 app.use('/approves', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), approveRouter)
 app.use('/rooms', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN]), roomRouter)
@@ -41,4 +42,5 @@ app.use('/booking', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTE
 app.use('/approveRecipe', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN, ROLE.APPROVER]), approveRecipeRouter)
 app.use('/auth', authRouter)
 app.use('/timeTable', authenMiddleware, authorizeMiddleware([ROLE.USER, ROLE.SYSTEM, ROLE.LOCAL_ADMIN, ROLE.APPROVER]), timeTable)
+app.use('/seeBuilding', authenMiddleware, authorizeMiddleware([ROLE.USER]), seeBuilding)
 module.exports = app
